@@ -1,0 +1,131 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Movimento Academia</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+    <link href="/assets/css/criar.css" rel="stylesheet">
+    <script src="/assets/js/script.js"></script>
+    
+</head>
+<body>   
+    
+    <@MENU>
+    
+    <div class="container mt-3">
+        <h1 class="mb-4">Editar Instrutor</h1>
+
+        <@FORM_INSTRUTOR>
+     
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja editar este Instrutor?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary btn-salvar" data-dismiss="modal">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Editar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+    
+    <script>        
+        $( function() {
+            
+            $('.cpf').mask('000.000.000-00');
+            $('.rg').mask('00.000.000-00');
+            
+            $('#editModal').on('shown.bs.modal', function (e) {            
+                
+                $('#editModal .btn-salvar').prop("onclick", null).off("click");  
+                $('#editModal .btn-salvar').click(function () {
+                    if( document.editarInstrutor.checkValidity() ) {
+                        $(".editar").submit();
+                    } else {
+                        $('#editModal').modal('hide');
+                        document.editarInstrutor.reportValidity();
+                    }
+                    
+                });
+                
+            });
+            
+            if( $("#tipo-aula").length > 0 ) {
+                var tipo_aula = <@TIPO_AULA_INSTRUTOR>;
+                $("#tipo-aula").val(tipo_aula);
+            }
+            
+            $("#editarInstrutor").on('submit', function(){
+                form = $(this);
+                $.ajax({
+                    url: "updateInstrutor.php",
+                    data: form.serialize(),
+                    cache: false,
+                    success:function(result){
+                        console.log(result);
+                        if(result >= 1) {
+                            msg = "Instrutor editado com sucesso!"
+                            
+                            $('#updateModal .btn-close').click(function () {
+                                document.location.href = 'listagemInstrutor.php'
+                            });
+                        } else {
+                            msg = "Não foi possível editar Instrutor! Tente novamente mais tarde."
+                        }
+                        
+                        $('#updateModal').modal('show').find('.modal-body p').text(msg);
+                        
+                    },
+                    error: function(result) {
+                        console.log(result);
+                        msg = "Não foi possível editar Instrutor! Tente novamente mais tarde."
+                        $('#updateModal').modal('show').find('.modal-body p').text(msg);                        
+                    }
+                });
+                
+                return false;
+            });
+        } );
+    </script>    
+</body>
+</html>

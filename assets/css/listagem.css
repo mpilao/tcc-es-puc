@@ -1,0 +1,15 @@
+body {
+    padding-top: 60px;
+}
+
+.table-responsive a svg, .add-user a svg {
+    color:#212529;
+}
+
+.add-user {padding:15px;}
+.add-user svg, .add-user a {
+    width: 35px;
+    height: 35px;
+    display: block;
+    float:right;
+}

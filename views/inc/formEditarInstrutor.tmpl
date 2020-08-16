@@ -1,0 +1,47 @@
+<form class="editar" name="editarInstrutor" id="editarInstrutor">            
+    <div class="row">
+        <div class="col-md">
+            <div class="form-label-group">
+                <input type="text" id="id" class="form-control" placeholder="ID"  name="id" value="<@ID_INSTRUTOR>" hidden>
+                <input type="text" id="nome" class="form-control" placeholder="Nome" required autofocus name="nome" pattern="(\w.+\s).+" value="<@NOME_INSTRUTOR>">
+                <label for="nome">Nome*</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <div class="form-label-group">
+                <input type="text" id="cpf" class="form-control cpf" placeholder="012.345.678.90" required name="cpf" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" value="<@CPF_INSTRUTOR>" readonly>
+                <label for="cpf">CPF*</label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-label-group">
+                <input type="text" id="rg" class="form-control rg" placeholder="RG" required  name="rg" pattern="\d{2}\.?\d{3}\.?\d{3}-?\d{1,2}" value="<@RG_INSTRUTOR>" readonly>
+                <label for="rg">RG*</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <div class="form-label-group">    
+                <select class="form-control" id="tipo-aula" name="tipo-aula" required value="<@TIPO_AULA_INSTRUTOR>">
+                    <option value="">Tipo de Aula*</option>
+                    <option value="0">Em grupo</option>
+                    <option value="1">Musculação</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col-md">
+            <a class="btn btn-lg btn-secondary btn-block" href="listagemInstrutor.php">Cancelar</a>
+        </div>
+        <div class="col-md">
+            <a class="btn btn-lg btn-secondary btn-block text-white" data-toggle="modal" data-target="#editModal">Salvar</a>
+        </div>
+    </div>
+    
+</form>

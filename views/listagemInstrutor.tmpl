@@ -1,0 +1,122 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Movimento Academia</title>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" >
+  <link href="assets/css/listagem.css" rel="stylesheet">
+</head>
+<body>   
+  
+  <@MENU>
+  
+  <div class="container mt-3">
+    <h1>Instrutores</h1>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover ">
+        <@HEADER_INSTRUTORES>
+        <tbody>
+          <@ROWS_INSTRUTORES>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="add-user fixed-bottom">
+    <a href="criarInstrutor.php" title="Adicionar">
+      <svg class="bi bi-plus-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
+      </svg>
+    </a>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Excluir</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Tem certeza que deseja excluir este Instrutor?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary btn-excluir" data-dismiss="modal">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="deletedModal" tabindex="-1" role="dialog" aria-labelledby="deletedModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Excluir</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/assets/js/jquery.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    
+    $( function() {
+      
+      $('#deleteModal').on('show.bs.modal', function (e) {
+        
+        var button = $(e.relatedTarget);
+        var url_redirect = button[0].href;
+        $('#deleteModal .btn-excluir').prop("onclick", null).off("click");
+        $('#deleteModal .btn-excluir').click(function () {
+          $.ajax({
+            url: url_redirect,
+            cache:false,
+            success:function(result){
+              console.log("sucesso: " ,result);
+              if(result >= 1) {
+                msg = "Instrutor excluído com sucesso!"
+              } else {
+                msg = "Erro ao excluir Instrutor! Tente novamente mais tarde."
+              }
+              
+              $('#deletedModal').modal('show').find('.modal-body p').text(msg);
+              $('#deletedModal .btn-close').click(function () {
+                document.location.reload(true);
+              });
+              
+              
+            },
+            error: function(result) {
+              msg = "Erro ao excluir Instrutor! Tente novamente mais tarde."
+              
+              $('#deletedModal').modal('show').find('.modal-body p').text(msg);
+              $('#deletedModal .btn-close').click(function () {
+                document.location.reload(true);
+              });
+              
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
