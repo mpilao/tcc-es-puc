@@ -25,7 +25,7 @@ if (!empty( $_GET )) {
         }
         $proximo_pagamento_data = date_format($proximo_pagamento_data, 'Y-m-d h:m:s');
         
-        $comm = "INSERT INTO `". $mydb . "`.`Cliente` (`nome`, `cpf`, `rg`, `endereco`, `tipoPlano`, `diasFeriasUtilizado`, `diasFeriasRestante`) VALUES ('" . $_GET["nome"] . "', '" . preg_replace('/[\s.,-]+/', "", $_GET['cpf']) . "', '" . preg_replace('/[\s.,-]+/', "", $_GET['rg']) . "', '" . $_GET["endereco"] . "', '" . $_GET["tipo-plano"] . "', '0', '" . $total_dias_ferias . "')";
+        $comm  = "INSERT INTO `". $mydb . "`.`Cliente` (`nome`, `cpf`, `rg`, `endereco`, `tipoPlano`, `diasFeriasUtilizado`, `diasFeriasRestante`) VALUES ('" . $_GET["nome"] . "', '" . preg_replace('/[\s.,-]+/', "", $_GET['cpf']) . "', '" . preg_replace('/[\s.,-]+/', "", $_GET['rg']) . "', '" . $_GET["endereco"] . "', '" . $_GET["tipo-plano"] . "', '0', '" . $total_dias_ferias . "')";
         $comm2 = "INSERT INTO `". $mydb . "`.`Pagamento` (`idCliente`, `dataPagamento`, `dataProximoPagamento`, `statusPagamento`) VALUES (LAST_INSERT_ID(), '', '" . $proximo_pagamento_data . "', '0')";
         
         $db->beginTrans();
